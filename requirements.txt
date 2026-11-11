@@ -1,0 +1,4 @@
+# Cloud Composer provides Apache Airflow itself. Install the Google provider
+# in the Composer environment so this DAG can use BigQuery and GCS operators.
+apache-airflow-providers-google>=10.0.0,<11.0.0
+python-dotenv>=1.0.0,<2.0.0
