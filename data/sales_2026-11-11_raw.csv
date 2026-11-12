@@ -1,0 +1,9 @@
+sale_date,product_id,product_name,category,order_id,quantity,unit_price
+2026-11-11,P001,Notebook,Stationery,O1001,2,15.00
+2026-11-11,P001,Notebook,Stationery,O1002,1,15.00
+2026-11-11,P002,Blue Pen,Stationery,O1003,3,5.00
+2026-11-11,P002,Blue Pen,Stationery,O1004,2,5.00
+2026-11-11,P003,Desk Organizer,Office Supplies,O1005,1,45.00
+2026-11-11,P004,USB-C Cable,Electronics,O1006,2,35.00
+2026-11-11,P004,USB-C Cable,Electronics,O1007,1,35.00
+2026-11-11,P005,Wireless Mouse,Electronics,O1008,1,80.00
