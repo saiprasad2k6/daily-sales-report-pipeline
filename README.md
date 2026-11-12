@@ -10,11 +10,9 @@ into BigQuery.
 .
 ├── daily_sales_report.py
 ├── requirements.txt
+├── terraform
 └── README.md
 ```
-
-The DAG and its configuration file are expected in the same directory. There
-is no `resources/` directory in this project.
 
 ## Prerequisites
 
@@ -25,18 +23,15 @@ is no `resources/` directory in this project.
 - A BigQuery dataset named `sales_data`
 - A Composer service account that can read the bucket and write to BigQuery
 
-The DAG writes to the BigQuery table
-`PROJECT_ID.sales_data.daily_sales_report`. Create the dataset and table
-before running the DAG, or allow the load operator to create the table from
-the declared schema.
-
-## Configuration
-
-To create the cloud infrastructure with Terraform, follow
+To create the above cloud infrastructure with Terraform, follow
 [Terraform setup](./terraform/README.md). It provisions Composer, the sales
 bucket, dataset, and table, and sets the environment variables below in
 Composer. For that deployment, you do not need to upload `.env` or install
 packages manually.
+
+
+## Configuration
+
 
 The DAG reads these required values from the Composer environment:
 
@@ -45,7 +40,7 @@ SALES_PROJECT_ID=your-gcp-project-id
 SALES_GCS_BUCKET=your-gcs-bucket-name
 ```
 
-Terraform configures these values through `software_config.env_variables`.
+Terraform configures these values through `Environment Variables`.
 If you create the environment manually, configure the same values in the
 Composer environment's environment variables. `SALES_GCS_BUCKET` must contain
 only the bucket name, without the `gs://` prefix.
@@ -54,8 +49,7 @@ The DAG expects files using these Cloud Storage paths, where
 `YYYY-MM-DD` is the Airflow execution date:
 
 ```text
-gs://YOUR_BUCKET/raw/sales/sales_YYYY-MM-DD.csv
-gs://YOUR_BUCKET/processed/sales/sales_YYYY-MM-DD_aggregated.csv
+gs://YOUR_BUCKET/raw/sales_YYYY-MM-DD.csv
 ```
 
 The raw CSV must contain this header:
@@ -94,14 +88,14 @@ deactivate
 
 ## Install dependencies
 
-Cloud Composer provides Apache Airflow and the Google provider used by this
-DAG. This project has no additional Python package requirements, so no PyPI
-package installation is needed.
+Cloud Composer provides Apache Airflow and the Google provider used by this DAG. This project has no additional Python package requirements, so no PyPI package installation is needed.
 
 If you later add third-party imports, install only those packages through
 **Composer > Environment configuration > PyPI packages**.
 
-## Deploy and run the DAG
+## Deploy DAG
+
+THe DAG file is already uploaded by the terraform. You will not need the below commands, unless you want to upload it manually.
 
 Upload the DAG file to the Composer environment's `dags/` directory:
 
@@ -120,7 +114,7 @@ gcloud storage cp data/sales_2026-11-11_raw.csv \
   gs://YOUR_BUCKET/raw/sales/sales_2026-11-11.csv
 ```
 
-Then:
+## Run the DAG
 
 1. Open the Airflow UI from the Composer environment.
 2. Find the `daily_sales_report` DAG and enable it.
@@ -163,3 +157,12 @@ python -m py_compile daily_sales_report.py
 
 This checks Python syntax only; it does not connect to Google Cloud or execute
 the DAG.
+
+
+## Output
+
+### BigQuery Table
+![alt text](output-big-query.png)
+
+### Composer
+![alt text](output-composer-airflow.png)

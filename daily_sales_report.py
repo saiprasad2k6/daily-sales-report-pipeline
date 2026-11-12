@@ -29,8 +29,8 @@ DATASET_ID = "sales_data"
 TABLE_ID = "daily_sales_report"
 SALES_GCS_BUCKET = required_env("SALES_GCS_BUCKET")
 
-GCS_RAW_PREFIX = "data/raw/sales/"
-GCS_PROCESSED_PREFIX = "data/processed/sales/"
+GCS_RAW_PREFIX = "raw/"
+GCS_PROCESSED_PREFIX = "processed/"
 RAW_COLUMNS = {
     "sale_date",
     "product_id",
